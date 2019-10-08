@@ -50,7 +50,7 @@ class Field:
         for y in range(self.height):
             for x in range(self.width):
                 space = max_spaces[x] - len(self.field[y][x])
-                print(f" {self.field[y][x]} " + " " * space, end="")
+                print(f' {self.field[y][x]} ' + ' ' * space, end="")
 
             print("")
         print("\n")
@@ -228,14 +228,14 @@ class Field:
             'FiledCells': filedCells
         }
         try:
-            with open(f"saves/{name}.json", "w", encoding="utf-8") as F:
+            with open(f'saves/{name}.json', "w", encoding="utf-8") as F:
                 json.dump(save, F)
             print("Успешно сохранено!\n")
         except OSError:
             return "OSError"
 
     def loadField(self, name):
-        with open(f"saves/{name}.json", encoding="utf-8") as F:
+        with open(f'saves/{name}.json', encoding="utf-8") as F:
             save_data = json.loads(F.readline())
         if save_data.get("FieldType") is not None and save_data.get("FieldType") in self.field_types:
             self.field_type = save_data.get("FieldType")
