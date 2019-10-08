@@ -7,6 +7,7 @@ class Field:
         self.field_types = [4, 5, 6, 8]
         self.field_type = field_type
         self.cell = " "
+        self.score = 0
 
         self.__createFieldGeometry__(field_type)
         self.__createField__()
@@ -46,7 +47,7 @@ class Field:
                 if len(self.field[y][x]) > max_space:
                     max_space = len(self.field[y][x])
             max_spaces.append(max_space)
-
+        print(f"Score - {self.score}")
         for y in range(self.height):
             for x in range(self.width):
                 space = max_spaces[x] - len(self.field[y][x])
@@ -99,6 +100,7 @@ class Field:
                             if self.field[by][x] == self.cell:
                                 continue
                             elif self.field[by][x] == self.field[ay][x]:
+                                self.score += int(self.field[ay][x]) + int(self.field[by][x])
                                 self.field[ay][x] = str(int(self.field[ay][x]) + int(self.field[by][x]))
                                 self.field[by][x] = self.cell
                                 self.is_field_change = True
@@ -131,6 +133,7 @@ class Field:
                             if self.field[by][x] == self.cell:
                                 continue
                             elif self.field[by][x] == self.field[ay][x]:
+                                self.score += int(self.field[ay][x]) + int(self.field[by][x])
                                 self.field[ay][x] = str(int(self.field[ay][x]) + int(self.field[by][x]))
                                 self.field[by][x] = self.cell
                                 self.is_field_change = True
@@ -163,6 +166,7 @@ class Field:
                             if self.field[y][bx] == self.cell:
                                 continue
                             elif self.field[y][bx] == self.field[y][ax]:
+                                self.score += int(self.field[y][ax]) + int(self.field[y][bx])
                                 self.field[y][ax] = str(int(self.field[y][ax]) + int(self.field[y][bx]))
                                 self.field[y][bx] = self.cell
                                 self.is_field_change = True
@@ -195,6 +199,7 @@ class Field:
                             if self.field[y][bx] == self.cell:
                                 continue
                             elif self.field[y][bx] == self.field[y][ax]:
+                                self.score += int(self.field[y][ax]) + int(self.field[y][bx])
                                 self.field[y][ax] = str(int(self.field[y][ax]) + int(self.field[y][bx]))
                                 self.field[y][bx] = self.cell
                                 self.is_field_change = True
@@ -225,6 +230,7 @@ class Field:
         save = {
             'SaveName': name,
             'FieldType': self.field_type,
+            'Score': self.score,
             'FiledCells': filedCells
         }
         try:
@@ -239,6 +245,7 @@ class Field:
             save_data = json.loads(F.readline())
         if save_data.get("FieldType") is not None and save_data.get("FieldType") in self.field_types:
             self.field_type = save_data.get("FieldType")
+            self.score = save_data.get("Score")
             self.__createFieldGeometry__(self.field_type)
             self.__createField__()
         else:

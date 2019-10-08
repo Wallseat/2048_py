@@ -195,6 +195,7 @@ def game_handler():
 
         else:
             print(m.w_command_err)
+            print(m.start_help_text)
             continue
 
 
